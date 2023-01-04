@@ -1,0 +1,110 @@
+version: "3.1"
+
+## Rule are defined here, it is something the Chatbot needs to follow in the training whenever the mentioned
+## rules occurs in a conversation with the Chatbot
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: When random input prompt with Error
+  steps:
+  - intent: Random_Input
+  - action: utter_cant_process
+
+- rule: Say "Your Welcome" when user says Thank you etc
+  steps:
+  - intent: thankyou
+  - action: utter_welcome
+
+- rule: When Type of Automata is told Ask for Alphabets always
+  steps:
+  - intent: tell_TypeOfAutomata
+  - action: utter_ask_alphabets_verify
+
+# - rule: Prompts to Starting of Question once The Alphabets are recorded always
+#   steps:
+#   - intent: tell_alphabets
+#   - action: utter_question_start
+#   - action: utter_ask_TOL
+
+- rule: When Type of Language is told Ask for string verify to start validation process always
+  steps:
+  - intent: tell_TOL
+  - action: utter_ask_string_verify
+
+- rule: Confirming Closure and Run Action Server
+  steps:
+  - intent: confirm_closure
+  - action: action_fetched_data
+
+- rule: When Closure value is told then ask for Type of Language always
+  steps:
+  - intent: tell_closure
+  - action: utter_ask_TOL
+
+- rule: Deny Closure and End Question
+  steps:
+  - intent: deny_closure
+  - action: action_fetched_data
+
+- rule: Ambiguous Question
+  steps:
+  - intent: verify_ambiguous
+  - action: utter_sorry_ambiguous
+
+- rule: After Ambigous Identification and User Admits it
+  steps:
+  - intent: skip_to_sad_welcome
+  - action: utter_sad_welcome
+
+- rule: After Ambiguous Identification and User Negelects it
+  steps:
+  - intent: neglect_ambiguous
+  - action: utter_sorry_but_ambiguous
+
+- rule: Activate Alphabets Validation Form
+  steps:
+  - intent: tell_alphabets
+  - action: alphabets_form
+  - active_loop: alphabets_form
+
+- rule: Deactivate Alphabets Validation Form
+  condition:
+  - active_loop: alphabets_form
+  steps:
+  - action: alphabets_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_question_start
+  - action: utter_ask_TOL
+
+- rule: Activate String Validation Form
+  steps:
+  - intent: tell_string
+  - action: string_form
+  - active_loop: string_form
+
+- rule: Deactivate String Validation form
+  condition:
+  - active_loop: string_form
+  steps:
+  - action: string_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_fetched_data
+
+# - rule: always ask ask string after TOL
+#   steps:
+#   - intent: tell_TOL
+#   - action: utter_ask_string
+
+# - rule: Say 'I am a bot' anytime the user challenges
+#   steps:
+#   - intent: bot_challenge
+#   - action: utter_iamabot
