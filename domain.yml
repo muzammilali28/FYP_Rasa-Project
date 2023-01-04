@@ -1,0 +1,265 @@
+version: "3.1"
+
+## Intents - Define Response of the User
+intents:
+  - user_greet
+  - tell_have_question
+  - tell_TypeOfAutomata
+  - tell_alphabets
+  # - no_question
+  - tell_TOL
+  - tell_TOL_sec_round
+  - tell_string
+  - tell_string_sec_round
+  - confirm_closure
+  - tell_closure
+  - deny_closure
+  - goodbye
+  - thankyou
+  - verify_ambiguous
+  - neglect_ambiguous
+  - skip_to_sad_welcome
+  - Random_Input
+
+## Entities -  Data to Fetch from users conversation etc
+entities:
+  - typeOfAutomata
+  # - alphabets
+  - TOL
+  - cloProp
+  - option
+
+## Form - For entered / inputed String Validation , it runs the action server's Validation Function
+forms:
+  string_form:
+    required_slots:
+      - string
+  alphabets_form:
+    required_slots:
+      - alphabets
+
+## Slots -  specification of each slot , its type etc...
+slots:
+  # typeOfAutomata:
+  #   type: categorical
+  #   values:
+  #     - DFA
+  #     - NFA
+  #     - NFA-NULL
+  #   mappings:
+  #   - type: from_entity
+  #     entity: typeOfAutomata
+  #   # influence_conversation: true
+  typeOfAutomata:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: typeOfAutomata
+    # influence_conversation: true
+
+  # alphabets:
+  #   type: categorical
+  #   values:
+  #     - a,b
+  #     - 0,1
+  #   mappings:
+  #   - type: from_entity
+  #     entity: alphabets
+  #   influence_conversation: true
+  alphabets:
+    type: text
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: alphabets_form
+        requested_slot: alphabets
+    # influence_conversation: true
+  
+  TOL:
+    type: text
+    # values:
+    #   - starts
+    #   - ends
+    #   - contains
+    mappings:
+    - type: from_entity
+      entity: TOL
+    # influence_conversation: true
+  # TOL:
+  #   type: text
+  #   mappings:
+  #   - type: from_entity
+  #     entity: TOL
+  #   influence_conversation: true
+  
+  # string:
+  #   type: text
+  #   mappings:
+  #   - type: from_entity
+  #     entity: string
+  #   # influence_conversation: true
+  string:
+    type: text
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: string_form
+        requested_slot: string
+  
+  option:
+    type: text
+    # initial_value: "None"
+    mappings:
+    - type: from_entity
+      entity: option
+    influence_conversation: true
+#####################################
+  cloProp:
+    type: categorical
+    values:
+      - and
+      - or
+    mappings:
+    - type: from_entity
+      entity: cloProp
+    # influence_conversation: true
+
+## Responses -  What the Bot says to the User
+responses:
+  utter_greet_back:
+  - text: "
+  Hey There 👋\n\n
+  How can I help you today?"
+    buttons:
+      - title: "I want Solution of a Question!"
+        payload: /tell_have_question
+
+  utter_ask_type_of_automata:
+  # - text: "What type of Automata you want to make? 👉 (DFA) (NFA) (NFA-NULL)\n\nClick or Enter your choice below 👇"
+  - text: "
+  What type of Automata you want to make?\n\n
+  Click on your choice below 👇"
+    buttons:
+      - title: "DFA"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"DFA"}}
+      - title: "NFA"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"NFA"}}
+      - title: "NFA-NULL"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"NFA-NULL"}}
+
+  utter_ask_alphabets:
+  # - text: "Tell me the alphabets 👉 example: (a,b)\n\nClick or Enter your Alphabets below 👇"
+  - text: "Click or Enter your Alphabets 👇"
+    buttons:
+      - title: "a,b"
+        payload: a,b
+      - title: "0,1"
+        payload: 0,1
+
+  utter_question_start:
+  - text: "
+  Okay!\n\n
+  We will start with the Type of Language now!"
+
+  utter_ask_TOL:
+  # - text: "*Type of Language* 👉 (starts) (ends) (contains)\n\nClick or Enter your choice below 👇"
+  - text: "
+  **Type of Language**\n\n
+  Click on your choice below 👇"
+    buttons:
+      - title: "starts with"
+        payload: /tell_TOL{{"TOL":"starts"}}
+      - title: "ends with"
+        payload: /tell_TOL{{"TOL":"ends"}}
+      - title: "contains"
+        payload: /tell_TOL{{"TOL":"contains"}}
+
+  # utter_ask_TOL_sec_round:
+  # - text: "Ok! Now for the last time , Enter Type of Language : (starts) (ends) (contains)"
+
+  utter_ask_alphabets_verify:
+  - text: "Shall We proceed to the **Alphabets** Input Now?"
+    buttons:
+      - title: "Ok! go on"
+        payload: /tell_alphabets
+
+  utter_ask_string_verify:
+  - text: "Shall We proceed to the **String** Input Now?"
+    buttons:
+      - title: "Yes, proceed!"
+        payload: /tell_string
+
+  utter_ask_string:
+  - text: "Enter the String 👇"
+
+  utter_sorry_but_ambiguous:
+  - text: "
+  I verified the details again...\n\n
+  Sorry to say but your Question is **Incorrect** 😟\n\n
+  But don't worry...\n\n
+  Cheer Up 🤗\n\n
+  Would you like to write the Correct Question?"
+    buttons:
+      - title: "Re-enter Question"
+        payload: /tell_have_question
+      - title: "No, Leave it.."
+        payload: /skip_to_sad_welcome
+
+  utter_sorry_ambiguous:
+  - text: "
+  Sorry 😟 but your question is **Ambiguous**\n\n
+  Would you like to write the Correct Question?"
+    buttons:
+      - title: "Re-enter Question"
+        payload: /tell_have_question
+      - title: "No, Leave it.."
+        payload: /skip_to_sad_welcome
+
+  # utter_ask_string_sec_round:
+  # - text: "Lastly,  Enter the String : "
+
+  # utter_want_closure?:
+  # - text: "Would you like to add a closure property?"
+  
+  # utter_ask_closure:
+  # - text: "'Closure Property' 👉 (and) (or)\n\nEnter your choice below 👇"
+
+  # utter_verify:
+  # - text: "I have got the details"
+
+  # utter_fetched_TOL_string_closure:
+  # - text: "So it {TOL} '{string}' , has Closure property : {cloProp}"
+
+  # utter_fetched_TOL_string:
+  # - text: "So it {TOL} {string} only!"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_cant_process:
+  - text: "I cannot proccess this\n\nkindly write in an interactable way..."
+
+  utter_sad_welcome:
+  - text: "
+  Alright 😔\n\n
+  But don't forget\n\n
+  I am here to assist you anytime 😇"
+
+  utter_welcome:
+  - text: "
+  Your Welcome 😄\n\n
+  I am here to assist you anytime 😇"
+
+  # utter_iamabot:
+  # - text: "I am a bot, powered by Rasa."
+
+
+## Custom Actions - Write your own logic on RASA backend Actions Server, triggers the function names defined below
+actions:
+  - action_fetched_data
+  - validate_string_form
+  - validate_alphabets_form
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
