@@ -1,0 +1,95 @@
+version: "3.1"
+
+## These are all the stories or Memory of the Chatbot's Trainging , when help the Bot to identify
+## what I need to understand from the user and what I need to tell back to them
+## contains all the situations, scenarios to what do to in what case....
+
+stories:
+
+#####################################
+
+###### The Main Working Story #######
+
+#####################################
+- story: Tell the Type of Automata
+  steps:
+  - intent: user_greet
+  - action: utter_greet_back
+  - intent: tell_have_question
+  - action: utter_ask_type_of_automata
+  - intent: tell_TypeOfAutomata
+  - action: utter_ask_alphabets_verify
+  
+- story: Tell the Alphabets
+  steps:
+  - intent: tell_have_question                        
+  - action: utter_ask_type_of_automata                
+  - intent: tell_TypeOfAutomata
+  - action: utter_ask_alphabets_verify
+  - intent: tell_alphabets
+  - action: alphabets_form
+  - active_loop: alphabets_form
+  - slot_was_set:
+    - requested_slot: alphabets
+  - slot_was_set:
+    - string: a,b
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: utter_question_start
+  - action: utter_ask_TOL
+
+- story: Tell Type of Language and String (before closure)
+  steps:
+  - intent: tell_TOL
+  - action: utter_ask_string_verify
+  - intent: tell_string
+  - action: string_form
+  - active_loop: string_form
+  - slot_was_set:
+    - requested_slot: string
+  - slot_was_set:
+    - string: abba
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_fetched_data
+  
+- story: Confirmation of Closure then Ask Closure Property
+  steps:
+  - intent: confirm_closure
+  - action: action_fetched_data
+  - intent: tell_TOL
+  - action: utter_ask_string_verify
+
+- story: Ask the Type of Language and String (after closure)
+  steps:
+  - intent: tell_TOL
+  - action: utter_ask_string_verify
+  - intent: tell_string
+  - action: string_form
+  - active_loop: string_form
+  - slot_was_set:
+    - requested_slot: string
+  - slot_was_set:
+    - string: abba
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_fetched_data
+
+- story: Decline of Closure and Finish the Question
+  steps:
+  - intent: tell_string
+  - action: string_form
+  - active_loop: string_form
+  - slot_was_set:
+    - requested_slot: string
+  - slot_was_set:
+    - string: abba
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_fetched_data
+  - intent: deny_closure
+  - action: action_fetched_data
