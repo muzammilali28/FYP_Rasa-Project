@@ -1,0 +1,260 @@
+version: "3.1"
+
+## This Files contains all the training data for the Bot to understand the User input, you can add more training data
+## and train your bot for different types of inputs from the User
+
+nlu:
+- intent: user_greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - AOA
+    - Assalam O Alikum
+    - Salam
+
+- intent: tell_have_question
+  examples: |
+    - I have a Question
+    - Can you help me with a question
+    - Please help me out
+    - I want the solution of a question
+    - help me out with a question
+    - I am stuck in a question
+    - I need your assistance
+    - I want solution of my Question
+    - You want solution of your question?
+    - Want to Solve another Question?
+    - can you help me with another question?
+    - I would like to re-enter my question
+    - Yes, I would like to re enter my question
+    - re enter my question
+    - I will write the correct question now
+
+- intent: tell_TypeOfAutomata
+  examples: |
+    - [DFA](typeOfAutomata)
+    - [NFA](typeOfAutomata)
+    - [NFA-NULL](typeOfAutomata)
+    - I want a [DFA](typeOfAutomata)
+    - I want a [NFA](typeOfAutomata)
+    - I want a [NFA-NULL](typeOfAutomata)
+    - I want solution of [DFA](typeOfAutomata)
+    - I want solution of [NFA](typeOfAutomata)
+    - I want solution of [NFA-NULL](typeOfAutomata)
+
+# - intent: tell_alphabets
+#   examples: |
+#     - [a,b](alphabets)
+#     - [0,1](alphabets)
+#     - [a,b,c](alphabets)
+#     - [a,b,c,d](alphabets)
+#     - They are [a,b](alphabets)
+#     - They are [0,1](alphabets)
+#     - They are [a,b,c](alphabets)
+#     - they are [a,b,c,d](alphabets)
+#     - The alphabets are [a,b](alphabets)
+#     - The alphabets are [0,1](alphabets)
+#     - the alphabets are [a,b,c](alphabets)
+#     - the alphabets are [a,b,c,d](alphabets)
+- intent: tell_alphabets
+  examples: |
+    - a,b
+    - 0,1
+    - Yes, proceed forward.
+    - Yes, proceed
+    - Ok! go on
+    - sure go on
+    - Ok move on
+    - sure, why not
+
+# - intent: no_question
+#   examples: |
+#     - No
+#     - No, I don't have a question
+#     - I don't
+#     - I do not
+#     - nahi
+#     - nae
+#     - nahi koi sawal nae
+
+- intent: tell_TOL
+  examples: |
+    - [starts](TOL)
+    - [ends](TOL)
+    - [contains](TOL)
+    - It [ends](TOL) with
+    - It [starts](TOL) with
+    - It [contains](TOL)
+
+###################################
+# - intent: tell_TOL_sec_round
+#   examples: |
+#     - [starts](typeOfLang)
+#     - [ends](typeOfLang)
+#     - [contains](typeOfLang)
+#     - It [ends](typeOfLang)
+#     - It [starts](typeOfLang)
+#     - It [contains](typeOfLang)
+####################################
+
+# - intent: tell_string
+#   examples: |
+#     - [a](string)
+#     - [b](string)
+#     - [0](string)
+#     - [1](string)
+#     - [aabbaa](string)
+#     - [001100](string)
+#     - [1101010](string)
+#     - [001](string)
+#     - [10](string)
+#     - [01011](string)
+#     - [abb](string)
+#     - The string is [babbaab](string)
+#     - The string is [1011001](string)
+#     - Its [aababbabbab](string)
+#     - Its [00101101101](string)
+- intent: tell_string
+  examples: |
+    - aabbaa
+    - abb
+    - a
+    - b
+    - ba
+    - ab
+    - babbaab
+    - aababbabbab
+    - babb
+    - d
+    - c
+    - dcd
+    - cddcc
+    - dddccc
+    - o
+    - r
+    - rrooro
+    - ororoo
+    - 0
+    - 1
+    - 10
+    - 11
+    - 01
+    - 00
+    - 110
+    - 010
+    - 11100010
+    - 001011
+    - Yes, proceed forward.
+    - sure proceed
+    - proceed forward
+    - ofcourse
+    - for sure
+
+######################################
+# - intent: tell_string_sec_round
+#   examples: |
+#     - [a](supporting_string)
+#     - [b](supporting_string)
+#     - [aabbaa](supporting_string)
+#     - The string is [babbaab](supporting_string)
+#     - Its [aababbabbab](supporting_string)
+#######################################
+
+- intent: confirm_closure
+  examples: |
+    - [Yes](option)
+    - [Yes](option) I want to add it
+    - [Yes](option) I want to
+    - sure [yes](option)
+    - [yes](option) ofcourse
+    - [yes](option) I would like to add it
+
+- intent: tell_closure
+  examples: |
+    - [and](cloProp)
+    - its [and](cloProp)
+    - [or](cloProp)
+    - its [or](cloProp)
+    - the property is [and](cloProp)
+
+- intent: deny_closure
+  examples: |
+    - [No](option)
+    - [no](option) I don't want to add it
+    - [No](option) I don't want to
+    - [No](option) I do not
+    - [no](option) thankyou
+
+- intent: goodbye
+  examples: |
+    - Bye
+    - See you
+    - Khuda Hafiz
+
+- intent: thankyou
+  examples: |
+    - Thank You RASA for helping me out in this question
+    - Thank You so much rasa
+    - Thank you RASA
+    - you solved my problem , thank you so much
+    - thank you
+    - thank you for your help assistant
+    - nope
+    - No, Thank You
+
+########################################################################################
+
+- intent: verify_ambiguous
+  examples: |
+    - I guess my question is incorrect
+    - Yes, that is my question
+    - yup
+    - I think my question maybe incorrect
+    - yes you are absolutely right
+    - yes I did
+    - yes that is exactly what I just said
+
+- intent: skip_to_sad_welcome
+  examples: |
+    - Nope
+    - No way
+    - No just leave it
+    - nevermind
+    - No its fine
+
+- intent: neglect_ambiguous
+  examples: |
+    - No, I wrote the correct question
+    - No you have identified it incorrectly
+    - no way I wrote the correct question
+    - no I didnt
+    - NO I did not
+    - no i didn't
+
+# - intent: bot_challenge
+#   examples: |
+#     - are you a bot?
+#     - are you a human?
+#     - am I talking to a bot?
+#     - am I talking to a human?
+
+- intent: Random_Input
+  examples: |
+    - Y
+    - N
+    - ?
+    - .
+    - ,..,/\';[]=-+_'
+    - y
+    - n
