@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./webpage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital@1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Varela Round" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" type="text/css">
+    <title>RASA-Chatbot</title>
+</head>
+<body>
+  <!-- Internal or Embedded CSS for the Chatbot Widget , pre-defined names from the widget Github -->
+    <style>
+      .rw-conversation-container .rw-header{background-color: rgb(95, 158, 160);}
+      .rw-conversation-container .rw-messages-container .rw-message .rw-client{background-color: rgb(95, 158, 160);}
+      .rw-launcher{background-color: rgb(95, 158, 160);}
+      .rw-conversation-container .rw-reply{background-color: rgb(95, 158, 160); border: 1px solid rgb(95, 158, 160)}
+    </style>
+
+    <!-- JavaScript to Interact with the Chatbot Widget from the RASA Server -->
+      <script>
+      !(function () {
+          let e = document.createElement("script"),
+            t = document.head || document.getElementsByTagName("head")[0];
+          (e.src =
+            "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+            // Replace 1.x.x with the version that you want
+            // Not replacing the RASA version due to widget compaitablitiy issues.
+            (e.async = !0),
+            (e.onload = () => {
+              window.WebChat.default(
+                {
+                  initPayload: '/greet',                      // Initial Payload sent to User by the Widget when it is Clicked!
+                  customData: { language: "en" },             // Specifying the Chat interaction language
+                  socketUrl: "http://localhost:5005",         // Socket URL for Interacting with the Chatbot's running RASA server
+                  title: 'Automata Crackistant',              // Title of the Widgget's <Header>
+                  subtitle: 'Your Solution Assistant 😉',    // Subtitle of the Widget's <Header>
+                  inputTextFieldHint: "Enter here ...",       // Input Text Field (Hint)...overlay
+                  showMessageDate: true,                      // Show the User's and Bot's sent message Timestamp
+                  showFullScreenButton: true,                 // Button Option to toggle full screen
+                  profileAvatar: "./assets/chatbot-icon.svg",                   // Bot's Profile Picture
+                  openLauncherImage: "./assets/speech-bubble-icon.svg"          // Widget's Picture, when webpage loads
+                },
+                null
+              );
+            }),
+            t.insertBefore(e, t.firstChild);
+        })();
+        localStorage.clear();     // clears out the conversation that is being stored in the local storage of the web browser
+        </script>
+
+        <!-- The RASA Chatbot's Webpage -->
+        <div class="top">
+          <a class="icon" href="#"><i class="fa-solid fa-house-chimney house"></i></a>
+        </div>
+        <div class="bg">
+            <header>
+                <div class="logo">
+                    <img src="./assets/logo.jpg" alt="logo"/>
+                </div>
+                <div class="headerTitles">
+                    <span class="headerTitleSm">Ready to</span>
+                    <span class="headerTitleLg">Crack?</span>
+                </div>
+            </header>
+            <h4 class="inputtext">Chatbot</h4>
+            <p class="line">After having a conversation with our chatbot<br><br>Click the button below to generate solution.</p>
+            <div class="buttons">
+                <button type="submit" name="yo" value="hello" class="button1">Generate Solution</button>
+            </div>
+        </div> 
+        <footer>
+            <p>Group ID: S22BS031</p>
+            <p>Automata Cracker</p>
+        </footer>
+</body>
+</html>
