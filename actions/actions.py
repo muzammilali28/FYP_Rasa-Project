@@ -16,6 +16,8 @@ from rasa_sdk.types import DomainDict
 
 # Custom Action Function to Fetch and Store all the data from the slots/entities in a "rasa_data.txt" file
 # This function contains all the custom logic that I have build...
+
+file = 0     # file pointer (globally accessable) inside the custom action
 class ActionOutputDatatoFile(Action):
     
     check = 1                  # Variable to manage what the Bot needs to say and ask the user.
@@ -39,7 +41,6 @@ class ActionOutputDatatoFile(Action):
         closureYorN = tracker.get_slot("option")          # Get the value of slot {Closure? Yes / No option} and store in variable called "closureYorN"
 
         filePath = "C:\\Users\\Muzammil Ali\\Desktop\\RasaData\\rasa_data.txt"     # Path to file, which needs to be written
-        file = 0     # file pointer (globally accessable) inside the custom action
         
         # Condition to make a new file only once when this Custom Function is executed everytime
         if self.createNewFile == 1:
@@ -271,7 +272,7 @@ class ValidateStringForm(FormValidationAction):
             return {"string": None}
 
 # Alphabets Validation Function that runs on realtime when the Bot prompts you to " enter the alphabets "
-class ValidateStringForm(FormValidationAction):
+class ValidateAlphabetsForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_alphabets_form"
 
@@ -305,8 +306,6 @@ class ValidateStringForm(FormValidationAction):
             if ((alphaInput[0] >= 'a' and alphaInput[0] <= 'z') or (alphaInput[0] >= '0' and alphaInput[0] <= '9')) and ((alphaInput[2] >= 'a' and alphaInput[2] <= 'z') or (alphaInput[2] >= '0' and alphaInput[2] <= '9')):
                 # Check Updated that Alphabet/numeric format is "Correct"
                 alphabetCheck = 1
-            # elif (alphaInput[0] >= '0' and alphaInput[0] <= '9') and (alphaInput[2] >= '0' and alphaInput[2] <= '9'):
-            #     alphabetCheck = 1
         
         # Validating that the center input is a "," for sure
         if alphaInput[1] == ',':
@@ -315,10 +314,16 @@ class ValidateStringForm(FormValidationAction):
 
         # If both the Alpbaet/Numeric Input + the "," is correct , In-Short it is a Valid "alphabets" Input
         if alphabetCheck == 1 and commaCheck == 1:
-            # Console Output -> Success
-            print("\nAlphabet input is (Valid...)")
-            # The Entered Alphabet is Valid therefore set it to the "alphabets" slot/entity
-            return {"alphabets": slot_value}
+            
+            # Validation if the Alphabets on the left and right are same , incase
+            if alphaInput[0] == alphaInput[2]:
+                dispatcher.utter_message(text="Alphabets cannot be Same ❌")
+                return {"alphabets": None}
+            else:
+                # Console Output -> Success
+                print("\nAlphabet input is (Valid...)")
+                # The Entered Alphabet is Valid therefore set it to the "alphabets" slot/entity
+                return {"alphabets": slot_value}
         else:
             # Bot Prompts with the Error to Re-Enter Input
             dispatcher.utter_message(text="Invalid Input ❌\n\nKindly follow the format ...")
