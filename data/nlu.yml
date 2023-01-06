@@ -179,6 +179,7 @@ nlu:
     - sure [yes](option)
     - [yes](option) ofcourse
     - [yes](option) I would like to add it
+    - [Yes](option) I would like to
 
 - intent: tell_closure
   examples: |
