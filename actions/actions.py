@@ -42,6 +42,10 @@ class ActionOutputDatatoFile(Action):
 
         filePath = "C:\\Users\\Muzammil Ali\\Desktop\\RasaData\\rasa_data.txt"     # Path to file, which needs to be written
         
+        # #################################### FOR MY TESTING #####################################
+        # file = 0     # file pointer (globally accessable) inside the custom action
+        # #########################################################################################
+
         # Condition to make a new file only once when this Custom Function is executed everytime
         if self.createNewFile == 1:
             file = open(filePath,"w")
@@ -60,9 +64,8 @@ class ActionOutputDatatoFile(Action):
         ]
 
         # Buttons for the User to select what they want to do after their recent question is finished !!
-        anotherQuestionAndThankYou = [
+        anotherQuestion = [
             {"title":"Want to Solve another Question?", "payload":"/tell_have_question"},
-            {"title":"No, Thank You!", "payload":"/thankyou"}
         ]
 
         # Buttons for User to select what to do once the Chat Bot detects Ambiguouness in the Question
@@ -70,6 +73,10 @@ class ActionOutputDatatoFile(Action):
             {"title":"Yes", "payload":"/verify_ambiguous"},
             {"title":"No", "payload":"/neglect_ambiguous"}
         ]
+
+        # Convert Yes or No to lower case
+        if closureYorN != None:
+            closureYorN = closureYorN.lower()
         
         # condition works when check is 1 and executes what is inside and reset the check to 0
         if self.check == 1:
@@ -77,6 +84,11 @@ class ActionOutputDatatoFile(Action):
             TOA = TOA.upper()     # Converting the input to uppercase , Making sure its in Capital Letters
             TOLtype = TOLtype.lower()       # Converting the TOL to lowercase , Making sure its in small letters
             
+            # Check all syntaxx of representing NFA-NULL and set it to TOA variable
+            if TOA in ["NFA-NULL","NFA-Ε","NFA-^","NFA-EPSILON","NFA-E"]:
+                # If any syntaxx of NFA-Null mathches then set it
+                TOA = "NFA-NULL"
+
             # What the Bot responds back to the User
             dispatcher.utter_message(text=f"Type of Automata : (**{TOA}**) ✔️\n\nAlphabets are : (**{alphabets}**) ✔️\n\nType of Language : (**{TOLtype}**) ✔️")
             dispatcher.utter_message(text=f"String : '**{fetchStr}**'✔️\n\nWould You like to add a closure property? -> (and) (or) 👇\n\n",buttons=optionsSetButton)
@@ -88,25 +100,32 @@ class ActionOutputDatatoFile(Action):
             # Condition what to write "Type of Automata" in the "rasa_data.txt" file
             if TOA == "DFA":
                 file.write("3\t\t//Type of Automata (DFA)\n")
+                # file.write("3\n")
             elif TOA == "NFA":
                 file.write("2\t\t//Type of Automata (NFA)\n")
+                # file.write("2\n")
             elif TOA == "NFA-NULL":
                 file.write("1\t\t//Type of Automata (NFA-NULL)\n")
+                # file.write("1\n")
             
             # Loop to write the alphabets to the file by seperating it with "," delimeter
             for data in alphabets.split(","):
                 file.write(f"{data}\t\t//alphabets\n")
 
             # Condition what to write "Type of Language" in the "rasa_data.txt" file
-            if TOLtype == "starts":
+            if TOLtype == "starts" or TOLtype == "begins":
                 file.write("1\t\t//starts with\n")
+                # file.write("1\n")
             elif TOLtype == "ends":
                 file.write("2\t\t//ends with\n")
+                # file.write("2\n")
             elif TOLtype == "contains":
                 file.write("3\t\t//contains\n")
+                # file.write("3\n")
 
             # Write the String to the "rasa_data.txt" file
             file.write(f"{fetchStr}\t\t//String\n")
+            # file.write(f"{fetchStr}\n")
 
             # Close the file which was opened in "W" -> Write Mode
             file.close()
@@ -118,9 +137,16 @@ class ActionOutputDatatoFile(Action):
         elif self.check == 2:
 
             TOLtype = TOLtype.lower()       # Converting the TOL to lowercase , Making sure its in small letters
+            closure = closure.lower()       # Coverting the Closure Property to Lower Case
+
+            # Check if the Closure Property matches either case of conditions, update variable accordingly
+            if closure in ["and","intersection"]:
+                closure = "and"
+            elif closure in ["or","union"]:
+                closure = "or"
 
             # Check for Ambiguity in the Question and updates the Ambiguity Check Variable accordingly
-            if (self.firstTOL == "starts" and TOLtype == "starts") and closure == "and":
+            if ((self.firstTOL == "starts" or self.firstTOL == "begins") and (TOLtype == "starts" or TOLtype == "begins")) and closure == "and":
                 dispatcher.utter_message(text="I have detected **Ambiguousness** in your question 🤨\n\n")
                 dispatcher.utter_message(text="**Note:** Ambiguous Questions **cannot** be entertained!\n\n")
                 dispatcher.utter_message(text=f"Did you just Say 👇\n\nIt (**{self.firstTOL}** with '{self.firstString}') / ***{closure}*** / (**{TOLtype}** with '{fetchStr}') ? 🤔",buttons=ambigQuestion)
@@ -150,7 +176,7 @@ class ActionOutputDatatoFile(Action):
             # What the Bot responds back to the User
             dispatcher.utter_message(text=f"Closure Propery : (**{closure}**) ✔️\n\nType of Language : (**{TOLtype}**) ✔️\n\n")
             dispatcher.utter_message(text=f"String : '**{fetchStr}**' ✔️\n\nI have got the details 📝\n\n")
-            dispatcher.utter_message(text=f"Click on the **Generate Solution** Button on the Webpage!\n\nIs there anything else I can help you with?",buttons=anotherQuestionAndThankYou)
+            dispatcher.utter_message(text=f"Click on the **Generate Solution** Button on the Webpage!",buttons=anotherQuestion)
 
             # Open the recent created file "rasa_data.txt" in "a" -> Append mode
             file = open(filePath,"a")
@@ -158,19 +184,25 @@ class ActionOutputDatatoFile(Action):
             # Condition what to write "Closure Property" in the "rasa_data.txt" file
             if closure == "or":
                 file.write("1\t\t//(OR / Union) closure property\n")
+                # file.write("1\n")
             elif closure == "and":
                 file.write("2\t\t//(AND / Intersection) closure property\n")
+                # file.write("2\n")
             
             # Condition what to write "Type of Language" in the "rasa_data.txt" file (Second Round - Last Round)
             if TOLtype == "starts":
                 file.write("1\t\t//starts with\n")
+                # file.write("1\n")
             elif TOLtype == "ends":
                 file.write("2\t\t//ends with\n")
+                # file.write("2\n")
             elif TOLtype == "contains":
                 file.write("3\t\t//contains\n")
+                # file.write("3\n")
 
             # Write the String to the "rasa_data.txt" file
             file.write(f"{fetchStr}\t\t//String\n")
+            # file.write(f"{fetchStr}\n")
 
             # Close the file which was opened in "A" -> Append Mode
             file.close()
@@ -185,7 +217,7 @@ class ActionOutputDatatoFile(Action):
             return [SlotSet("typeOfAutomata", None), SlotSet("alphabets", None), SlotSet("option", None), SlotSet("TOL", None), SlotSet("string", None), SlotSet("cloProp", None)]
 
         # Condtion to check the value of "closureYorN" and execute accordingly
-        if (closureYorN == "yes" or closureYorN == "Yes" or closureYorN == "Y" or closureYorN == "y") and self.check != 2:
+        if (closureYorN in ["yes","y","yup"]) and self.check != 2:
             
             # What the Bot responds back to the User
             dispatcher.utter_message(text=f"**Closure Property**\n\nClick on your choice below 👇",buttons=closureSetButton)
@@ -196,17 +228,18 @@ class ActionOutputDatatoFile(Action):
             # Reset the "String" slot to "None" so that the user can enter the string again for last-round input because they selected Want Closure? as Yes
             return [SlotSet("string", None)]
         
-        elif closureYorN == "no" or closureYorN == "No" or closureYorN == "N" or closureYorN == "n":
+        elif closureYorN in ["no","n","nope"]:
             
             # What the Bot responds back to the User
             dispatcher.utter_message(text=f"I have got the details 📝\n\n")
-            dispatcher.utter_message(text=f"Click on the **Generate Solution** Button on the Webpage!\n\nIs there anything else I can help you with?",buttons=anotherQuestionAndThankYou)
+            dispatcher.utter_message(text=f"Click on the **Generate Solution** Button on the Webpage!",buttons=anotherQuestion)
 
             # Open the recent created file "rasa_data.txt" in "a" -> Append mode
             file = open(filePath,"a")
 
             # Write the "0" to the "rasa_data.txt" file as the User select Want Closure? to "No" therfore the question ends here
             file.write("0\t\t//(NONE) closure property\n")
+            # file.write("0\n")
 
             # Close the file which was opened in "A" -> Append Mode
             file.close()
@@ -245,8 +278,25 @@ class ValidateStringForm(FormValidationAction):
         print("\nString : ",string)
         print("\nString Distinct List : ",stringUniqueList)
         print("\n")
+        
+        # Count if user have entered a statment rather then the string so check for " " spaces in the input
+        count = string.count(' ')
 
-        # Loop to iterate each element between the Distinch List of characters in the "Entered String"
+        # If there are spaces found in the input that means user entered a statment/phrase not a string
+        if count >= 1:
+            # Bot prompts the user with the error and guides what is askred/required
+            dispatcher.utter_message(text=f"The entered String is Invalid ❌\n\nPlease re-enter **ONLY** the String...")
+            # The enterted string is a statment therefore set the Slot Value to None so that User re-enters.
+            return {"string": None}
+
+        # If String is entered in the form of (aabbaa) or "100110" then guide the user  
+        if (string[0] == "(" or string[0] == '"' or string[0] == "[") and (string[len(string)-1] == ")" or string[len(string)-1] == '"' or string[len(string)-1] == "]"):
+            # Bot prompts the user that write String without the Brackets or " "
+            dispatcher.utter_message(text='The entered String is Invalid ❌\n\nWrite the String without **( )** or **" "** or **[ ]** ')
+            # The Entered String is Invalid therefore set the Slot "String" to None and Re-Ask the User to enter the correct string
+            return {"string": None}
+
+        # Loop to iterate each element between the Distinct List of characters in the "Entered String"
         for alphabet in stringUniqueList:
             
             # Check if the iterated element is present in the "Alphabets" list or no , which was enter by the User in the start example (a,b)
@@ -266,7 +316,7 @@ class ValidateStringForm(FormValidationAction):
         # The string characters are Invalid!
         else:
             # Bot prompts the User with an Error
-            dispatcher.utter_message(text=f"The entered string is Invalid ❌\n\nPlease re-enter the string...")
+            dispatcher.utter_message(text=f"The entered String is Invalid ❌\n\nPlease re-enter the String\n\nRemember your Alphabets are -> **{alphabets}**")
             
             # The Entered String is Invalid therefore set the Slot "String" to None and Re-Ask the User to enter the correct string
             return {"string": None}
@@ -287,14 +337,32 @@ class ValidateAlphabetsForm(FormValidationAction):
         alphaInput = slot_value             # Storing Alphabet Input from the fetched Slot "alphabets"
         alphabetCheck = 0                   # Check for Alphabets Format on the left and right of "," comma
         commaCheck = 0                      # Check that Alphabet Input contain "," comma in the center
+        count = 0                           # Count to check number of spaces if Alphabets input is a long statment
 
         # Printed on the Console for debugging
         print(f"The Alphabet Slot Value I got is : {alphaInput}\n")
 
         # Condition to check if the Alphabet Input length is Valid or No
         if len(alphaInput) > 3 or len(alphaInput) < 3:
+            # Check if the user has wrote a statmet other than just alphabets.
+            count = alphaInput.count(' ')
+            
+            # If it is a statment then obviously the number of " " spaces will be more than 2
+            if count >= 2:
+                # Bot Replies to the user to only entry the Alphabet not a statment
+                dispatcher.utter_message(text="Invalid Input ❌\n\nPlease Enter **ONLY** the Alphabets\n\ne.g -> **a,b** (Comma Separated)")
+                # As the user entered a statment, set slot "alphabets" to None so user re-enters the alphabets only now
+                return {"alphabets": None}
+            
+            # If alphabets are entered in the form of (a,b) or "a,b" then guide the user    
+            if (alphaInput[0] == "(" or alphaInput[0] == '"' or alphaInput[0] == "[") and (alphaInput[len(alphaInput)-1] == ")" or alphaInput[len(alphaInput)-1] == '"' or alphaInput[len(alphaInput)-1] == "]"):
+                # Bot prompts the user that write alphabets without the Brackets or " "
+                dispatcher.utter_message(text='Invalid Input ❌\n\nWrite Alphabets without **( )** or **" "** or **[ ]**')
+                # As the input is incorrect set the Slot Value to None so that User re-enters the Alphabets again
+                return {"alphabets": None}
+            
             # What the Bot prompts back to User
-            dispatcher.utter_message(text="Invalid Input ❌")
+            dispatcher.utter_message(text="Invalid Input ❌\n\nWrite your Alphabets correctly...")
             # The Entered Alphabets is Invalid therefore set the Slot "alphabets" to None and Re-Ask the User to enter the correct alphabets
             return {"alphabets": None}
         # If the Length Check is Valid then proceed to this condition
@@ -317,7 +385,7 @@ class ValidateAlphabetsForm(FormValidationAction):
             
             # Validation if the Alphabets on the left and right are same , incase
             if alphaInput[0] == alphaInput[2]:
-                dispatcher.utter_message(text="Alphabets cannot be Same ❌")
+                dispatcher.utter_message(text="Alphabets **can not** be Same ❌")
                 return {"alphabets": None}
             else:
                 # Console Output -> Success
@@ -326,6 +394,6 @@ class ValidateAlphabetsForm(FormValidationAction):
                 return {"alphabets": slot_value}
         else:
             # Bot Prompts with the Error to Re-Enter Input
-            dispatcher.utter_message(text="Invalid Input ❌\n\nKindly follow the format ...")
+            dispatcher.utter_message(text="Invalid Input ❌\n\nKindly follow the format\n\ne.g -> **a,b** (Comma Separated)")
             # The Entered Alphabet is Invalid therefore set the Slot "alphabets" to None and Re-Ask the User to enter the correct alphabets
             return {"alphabets": None}
