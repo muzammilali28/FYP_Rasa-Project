@@ -15,8 +15,6 @@ stories:
   steps:
   - intent: user_greet
   - action: utter_greet_back
-  - intent: tell_have_question
-  - action: utter_ask_type_of_automata
   - intent: tell_TypeOfAutomata
   - action: utter_ask_alphabets_verify
   
