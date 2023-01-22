@@ -22,6 +22,8 @@ nlu:
     - AOA
     - Assalam O Alikum
     - Salam
+    - help me
+    - anyone there
 
 - intent: tell_have_question
   examples: |
@@ -47,11 +49,38 @@ nlu:
     - [NFA](typeOfAutomata)
     - [NFA-NULL](typeOfAutomata)
     - I want a [DFA](typeOfAutomata)
-    - I want a [NFA](typeOfAutomata)
-    - I want a [NFA-NULL](typeOfAutomata)
+    - I want a ([NFA](typeOfAutomata))
+    - I want a "[NFA-NULL](typeOfAutomata)"
     - I want solution of [DFA](typeOfAutomata)
-    - I want solution of [NFA](typeOfAutomata)
-    - I want solution of [NFA-NULL](typeOfAutomata)
+    - I want solution of ([NFA](typeOfAutomata))
+    - I want solution of "[NFA-NULL](typeOfAutomata)"
+    - I want to make a [DFA](typeOfAutomata)
+    - I want to make a ([NFA](typeOfAutomata))
+    - I want to make a "[NFA-NULL](typeOfAutomata)"
+    - make me a [DFA](typeOfAutomata)
+    - make me a ([NFA](typeOfAutomata))
+    - make me a "[NFA-NULL](typeOfAutomata)"
+    - give me solution of [DFA](typeOfAutomata)
+    - give me solution of ([NFA](typeOfAutomata))
+    - give me solution of "[NFA-NULL](typeOfAutomata)"
+    - [NFA-ε](typeOfAutomata)
+    - I want a [NFA-ε](typeOfAutomata)
+    - I want solution of [NFA-ε](typeOfAutomata)
+    - I want to make a [NFA-ε](typeOfAutomata)
+    - make me a [NFA-ε](typeOfAutomata)
+    - give me solution of [NFA-ε](typeOfAutomata)
+    - [NFA-E](typeOfAutomata)
+    - I want a [NFA-E](typeOfAutomata)
+    - I want solution of [NFA-E](typeOfAutomata)
+    - I want to make a [NFA-E](typeOfAutomata)
+    - make me a [NFA-E](typeOfAutomata)
+    - give me solution of [NFA-E](typeOfAutomata)
+    - [NFA-epsilon](typeOfAutomata)
+    - I want a [NFA-epsilon](typeOfAutomata)
+    - I want solution of [NFA-epsilon](typeOfAutomata)
+    - I want to make a [NFA-epsilon](typeOfAutomata)
+    - make me a [NFA-epsilon](typeOfAutomata)
+    - give me solution of [NFA-epsilon](typeOfAutomata)
 
 # - intent: tell_alphabets
 #   examples: |
@@ -71,6 +100,18 @@ nlu:
   examples: |
     - a,b
     - 0,1
+    - c,d
+    - e,f
+    - g,h
+    - i,j
+    - k,l
+    - m,n
+    - o,p
+    - q,r
+    - 2,3
+    - 4,5
+    - 6,7
+    - 8,9
     - Yes, proceed forward.
     - Yes, proceed
     - Ok! go on
@@ -93,9 +134,21 @@ nlu:
     - [starts](TOL)
     - [ends](TOL)
     - [contains](TOL)
+    - [begins](TOL)
     - It [ends](TOL) with
     - It [starts](TOL) with
     - It [contains](TOL)
+    - It [begins](TOL) with
+    - my question is that it [starts](TOL) with
+    - my question is that it [ends](TOL) with
+    - my question is that it [contains](TOL)
+    - my question is that it [begins](TOL) with
+    - my question [starts](TOL) with
+    - my question [ends](TOL) with
+    - my question [begins](TOL) with
+    - my question [contains](TOL)
+
+
 
 ###################################
 # - intent: tell_TOL_sec_round
@@ -160,6 +213,7 @@ nlu:
     - proceed forward
     - ofcourse
     - for sure
+    - of course
 
 ######################################
 # - intent: tell_string_sec_round
@@ -180,14 +234,51 @@ nlu:
     - [yes](option) ofcourse
     - [yes](option) I would like to add it
     - [Yes](option) I would like to
+    - [Y](option)
+    - [Y](option) I want to add it
+    - [Y](option) I want to
+    - sure [y](option)
+    - [y](option) ofcourse
+    - [y](option) I would like to add it
+    - [Y](option) I would like to
+    - [Yup](option)
+    - [Yup](option) I want to add it
+    - [Yup](option) I want to
+    - sure [yup](option)
+    - [yup](option) ofcourse
+    - [yup](option) I would like to add it
+    - [Yup](option) I would like to
 
 - intent: tell_closure
   examples: |
     - [and](cloProp)
+    - "[and](cloProp)"
+    - ([and](cloProp))
     - its [and](cloProp)
     - [or](cloProp)
+    - "[or](cloProp)"
+    - ([or](cloProp))
     - its [or](cloProp)
-    - the property is [and](cloProp)
+    - the closure property is [and](cloProp)
+    - the closure property is [or](cloProp)
+    - the closure property is "[and](cloProp)"
+    - the closure property is "[or](cloProp)"
+    - the closure property is ([and](cloProp))
+    - the closure property is ([or](cloProp))
+    - [intersection](cloProp)
+    - "[intersection](cloProp)"
+    - ([intersection](cloProp))
+    - its [intersection](cloProp)
+    - [union](cloProp)
+    - "[union](cloProp)"
+    - ([union](cloProp))
+    - its [union](cloProp)
+    - the closure property is [intersection](cloProp)
+    - the closure property is [union](cloProp)
+    - the closure property is "[intersection](cloProp)"
+    - the closure property is "[union](cloProp)"
+    - the closure property is ([intersection](cloProp))
+    - the closure property is ([union](cloProp))
 
 - intent: deny_closure
   examples: |
@@ -196,12 +287,28 @@ nlu:
     - [No](option) I don't want to
     - [No](option) I do not
     - [no](option) thankyou
+    - [N](option)
+    - [n](option) I don't want to add it
+    - [N](option) I don't want to
+    - [N](option) I do not
+    - [n](option) thankyou
+    - [Nope](option)
+    - [nope](option) I don't want to add it
+    - [Nope](option) I don't want to
+    - [Nope](option) I do not
+    - [nope](option) thankyou
 
 - intent: goodbye
   examples: |
     - Bye
     - See you
     - Khuda Hafiz
+    - see ya
+    - got to go
+    - Allah Hafiz
+    - catch you later
+    - tata bye bye
+    - Bye bye
 
 - intent: thankyou
   examples: |
@@ -211,7 +318,6 @@ nlu:
     - you solved my problem , thank you so much
     - thank you
     - thank you for your help assistant
-    - nope
     - No, Thank You
 
 ########################################################################################
@@ -220,15 +326,15 @@ nlu:
   examples: |
     - I guess my question is incorrect
     - Yes, that is my question
-    - yup
     - I think my question maybe incorrect
     - yes you are absolutely right
     - yes I did
     - yes that is exactly what I just said
+    - Yes, I just wrote this above
+    - yes this is exactly what I wrote
 
 - intent: skip_to_sad_welcome
   examples: |
-    - Nope
     - No way
     - No just leave it
     - nevermind
@@ -252,10 +358,62 @@ nlu:
 
 - intent: Random_Input
   examples: |
-    - Y
-    - N
+    - nfa-^
+    - NFA-^
+    - ^
+    - ε
     - ?
     - .
     - ,..,/\';[]=-+_'
-    - y
-    - n
+    - asdadasd ,asd,a.sd asd.asd.,asd'\[\';[]-=']
+    - jvjlak;,;\';.'+-
+
+- intent: what_you_can_do
+  examples: |
+    - What can you help me with
+    - What type of help can you provide me
+    - Is there something specific that you can help me with
+    - What else can you do
+    - Is there anything else that you can do beside just solving regular language questions
+    - is there anything more you can do
+    - What is a DFA
+    - What is a dfa
+    - What is a NFA
+    - what is a nfa
+    - What is a NFA-NULL
+    - what is a nfa-null
+    - what is a NFA-ε
+    - What is a nfa-ε
+    - What is a NFA-E
+    - What is a nfa-E
+    - what is a nfa-e
+    - What are the characteristics of DFA
+    - What are the characteristics of dfa
+    - What are the characteristics of NFA
+    - What are the characteristics of nfa
+    - What are the characteristics of NFA-NULL
+    - What are the characteristics of nfa-null
+    - What are the characteristics of NFA-ε
+    - What are the characteristics of nfa-ε
+    - What are the characteristics of NFA-E
+    - What are the characteristics of nfa-E
+    - What are the characteristics of nfa-e
+    - What is a deterministc finite automata
+    - what is a non-deterministic finite automata
+    - What is a deterministc finite automata (DFA)
+    - what is a non-deterministic finite automata (NFA)
+    - what is a epsilon NFA
+    - What is a epsilon-nfa
+    - How to make a DFA
+    - how to make a dfa
+    - How to make deterministic finite automata
+    - How to make a NFA
+    - how to make a nfa
+    - how to make non-deterministic finite automata
+    - How to make NFA-ε
+    - How to make NFA-E
+    - How to make NFA-Epsilon
+    - how to make nfa-ε
+    - how to make nfa-E
+    - how to make nfa-e
+    - How to make nfa-epsilon
