@@ -20,6 +20,7 @@ intents:
   - neglect_ambiguous
   - skip_to_sad_welcome
   - Random_Input
+  - what_you_can_do
 
 ## Entities -  Data to Fetch from users conversation etc
 entities:
@@ -115,10 +116,11 @@ slots:
     influence_conversation: true
 #####################################
   cloProp:
-    type: categorical
-    values:
-      - and
-      - or
+    # type: categorical
+    # values:
+    #   - and
+    #   - or
+    type: text
     mappings:
     - type: from_entity
       entity: cloProp
@@ -129,15 +131,26 @@ responses:
   utter_greet_back:
   - text: "
   Hey There 👋\n\n
-  How can I help you today?"
+  What type of Automata you want to make?\n\n
+  Click on your choice below 👇"
     buttons:
-      - title: "I want Solution of a Question!"
-        payload: /tell_have_question
+      - title: "DFA"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"DFA"}}
+      - title: "NFA"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"NFA"}}
+      - title: "NFA-NULL"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"NFA-NULL"}}
+  # - text: "
+  # Hey There 👋\n\n"
+  # How can I help you today?"
+  #   buttons:
+  #     - title: "I want Solution of a Question!"
+  #       payload: /tell_have_question
 
   utter_ask_type_of_automata:
   # - text: "What type of Automata you want to make? 👉 (DFA) (NFA) (NFA-NULL)\n\nClick or Enter your choice below 👇"
   - text: "
-  What type of Automata you want to make?\n\n
+  Okay, What type of Automata you want to make?\n\n
   Click on your choice below 👇"
     buttons:
       - title: "DFA"
@@ -236,19 +249,30 @@ responses:
   utter_goodbye:
   - text: "Bye"
 
+  utter_only_RL_question:
+  - text: "
+  I am designed **Only** to Assist you with **TOA - Regular Language** Question 😇\n\n
+  Anything besides this I cannot entertain"
+
   utter_cant_process:
-  - text: "I cannot proccess this\n\nkindly write in an interactable way..."
+  - text: "I cannot proccess this\n\nkindly write what is asked..."
 
   utter_sad_welcome:
   - text: "
   Alright 😔\n\n
   But don't forget\n\n
   I am here to assist you anytime 😇"
-
+    buttons:
+      - title: "Want to Solve another Question?"
+        payload: /tell_have_question
+  
   utter_welcome:
   - text: "
   Your Welcome 😄\n\n
   I am here to assist you anytime 😇"
+    buttons:
+      - title: "Want to Solve another Question?"
+        payload: /tell_have_question
 
   # utter_iamabot:
   # - text: "I am a bot, powered by Rasa."
