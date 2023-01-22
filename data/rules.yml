@@ -20,6 +20,16 @@ rules:
   - intent: thankyou
   - action: utter_welcome
 
+- rule: Tell the User what your are designed for and cannot process anything else
+  steps:
+  - intent: what_you_can_do
+  - action: utter_only_RL_question
+
+- rule: Tell Have Another Question
+  steps:
+  - intent: tell_have_question
+  - action: utter_ask_type_of_automata
+
 - rule: When Type of Automata is told Ask for Alphabets always
   steps:
   - intent: tell_TypeOfAutomata
