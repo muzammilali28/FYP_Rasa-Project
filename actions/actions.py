@@ -17,7 +17,7 @@ from rasa_sdk.types import DomainDict
 # Custom Action Function to Fetch and Store all the data from the slots/entities in a "rasa_data.txt" file
 # This function contains all the custom logic that I have build...
 
-file = 0     # file pointer (globally accessable) inside the custom action
+# file = 0     # file pointer (globally accessable) inside the custom action
 class ActionOutputDatatoFile(Action):
     
     check = 1                  # Variable to manage what the Bot needs to say and ask the user.
@@ -46,10 +46,10 @@ class ActionOutputDatatoFile(Action):
         # file = 0     # file pointer (globally accessable) inside the custom action
         # #########################################################################################
 
-        # Condition to make a new file only once when this Custom Function is executed everytime
-        if self.createNewFile == 1:
-            file = open(filePath,"w")
-            self.createNewFile = 0
+        # # Condition to make a new file only once when this Custom Function is executed everytime
+        # if self.createNewFile == 1:
+        #     file = open(filePath,"w")
+        #     self.createNewFile = 0
 
         # Buttons for the User to select option for Closure -> Yes / No ?
         optionsSetButton =[
@@ -68,6 +68,11 @@ class ActionOutputDatatoFile(Action):
             {"title":"Want to Solve another Question?", "payload":"/tell_have_question"},
         ]
 
+        # Buttons in case Alphabets or typeOfAutomata is missing
+        somethingMissing = [
+            {"title":"Re-Enter Question", "payload":"/tell_have_question"},
+        ]
+
         # Buttons for User to select what to do once the Chat Bot detects Ambiguouness in the Question
         ambigQuestion = [
             {"title":"Yes", "payload":"/verify_ambiguous"},
@@ -77,9 +82,19 @@ class ActionOutputDatatoFile(Action):
         # Convert Yes or No to lower case
         if closureYorN != None:
             closureYorN = closureYorN.lower()
+
+        if (TOA == None) or (alphabets == None):
+            dispatcher.utter_message("I was going through the details 📝\n\n")
+            dispatcher.utter_message("I think you haven't entered either the **Type Of Automata** or **Alphabets** 😅\n\nKindly Write the Correct Question",buttons=somethingMissing)
+            self.check = 1
+            return [SlotSet("typeOfAutomata", None), SlotSet("alphabets", None), SlotSet("option", None), SlotSet("TOL", None), SlotSet("string", None), SlotSet("cloProp", None)]
         
         # condition works when check is 1 and executes what is inside and reset the check to 0
         if self.check == 1:
+
+            # if (TOA == None) or (alphabets == None):
+            #     dispatcher.utter_message("I was going through the details 📝\n\nI think you haven't entered either the\n\n**Type Of Automata** or **Alphabets** 😅\n\nKindly the Correct Question",buttons=somethingMissing)
+            #     self.check = 1
             
             TOA = TOA.upper()     # Converting the input to uppercase , Making sure its in Capital Letters
             TOLtype = TOLtype.lower()       # Converting the TOL to lowercase , Making sure its in small letters
@@ -89,9 +104,9 @@ class ActionOutputDatatoFile(Action):
                 # If any syntaxx of NFA-Null mathches then set it
                 TOA = "NFA-NULL"
 
-            # What the Bot responds back to the User
+            # What the Bot responds back to the User     -> (and) (or) 
             dispatcher.utter_message(text=f"Type of Automata : (**{TOA}**) ✔️\n\nAlphabets are : (**{alphabets}**) ✔️\n\nType of Language : (**{TOLtype}**) ✔️")
-            dispatcher.utter_message(text=f"String : '**{fetchStr}**'✔️\n\nWould You like to add a closure property? -> (and) (or) 👇\n\n",buttons=optionsSetButton)
+            dispatcher.utter_message(text=f"String : '**{fetchStr}**'✔️\n\nWould You like to add a closure property? 👇\n\n",buttons=optionsSetButton)
 
             # Saving the First time entered TOL and String , to check Ambiguity later...
             self.firstTOL = TOLtype
@@ -99,30 +114,46 @@ class ActionOutputDatatoFile(Action):
 
             # Condition what to write "Type of Automata" in the "rasa_data.txt" file
             if TOA == "DFA":
+                file = open(filePath,"w")
                 file.write("3\t\t//Type of Automata (DFA)\n")
                 # file.write("3\n")
+                file.close()
             elif TOA == "NFA":
+                file = open(filePath,"w")
                 file.write("2\t\t//Type of Automata (NFA)\n")
                 # file.write("2\n")
+                file.close()
             elif TOA == "NFA-NULL":
+                file = open(filePath,"w")
                 file.write("1\t\t//Type of Automata (NFA-NULL)\n")
                 # file.write("1\n")
+                file.close()
             
+            file = open(filePath,"a")
             # Loop to write the alphabets to the file by seperating it with "," delimeter
             for data in alphabets.split(","):
                 file.write(f"{data}\t\t//alphabets\n")
+            
+            file.close()
 
             # Condition what to write "Type of Language" in the "rasa_data.txt" file
-            if TOLtype == "starts" or TOLtype == "begins":
+            if TOLtype == "starts" or TOLtype == "begins" or TOLtype == "start":
+                file = open(filePath,"a")
                 file.write("1\t\t//starts with\n")
                 # file.write("1\n")
-            elif TOLtype == "ends":
+                file.close()
+            elif TOLtype == "ends" or TOLtype == "end":
+                file = open(filePath,"a")
                 file.write("2\t\t//ends with\n")
                 # file.write("2\n")
+                file.close()
             elif TOLtype == "contains":
+                file = open(filePath,"a")
                 file.write("3\t\t//contains\n")
                 # file.write("3\n")
+                file.close()
 
+            file = open(filePath,"a")
             # Write the String to the "rasa_data.txt" file
             file.write(f"{fetchStr}\t\t//String\n")
             # file.write(f"{fetchStr}\n")
@@ -146,12 +177,12 @@ class ActionOutputDatatoFile(Action):
                 closure = "or"
 
             # Check for Ambiguity in the Question and updates the Ambiguity Check Variable accordingly
-            if ((self.firstTOL == "starts" or self.firstTOL == "begins") and (TOLtype == "starts" or TOLtype == "begins")) and closure == "and":
+            if ((self.firstTOL == "starts" or self.firstTOL == "begins" or self.firstTOL == "start") and (TOLtype == "starts" or TOLtype == "begins" or TOLtype == "start")) and closure == "and":
                 dispatcher.utter_message(text="I have detected **Ambiguousness** in your question 🤨\n\n")
                 dispatcher.utter_message(text="**Note:** Ambiguous Questions **cannot** be entertained!\n\n")
                 dispatcher.utter_message(text=f"Did you just Say 👇\n\nIt (**{self.firstTOL}** with '{self.firstString}') / ***{closure}*** / (**{TOLtype}** with '{fetchStr}') ? 🤔",buttons=ambigQuestion)
                 self.ambiguousDetect = 1
-            elif (self.firstTOL == "ends" and TOLtype == "ends") and closure == "and":
+            elif ((self.firstTOL == "ends" or self.firstTOL == "end") and (TOLtype == "ends" or TOLtype == "end")) and closure == "and":
                 dispatcher.utter_message(text="I have detected **Ambiguousness** in your question 🤨\n\n")
                 dispatcher.utter_message(text="**Note:** Ambiguous Questions **cannot** be entertained!\n\n")
                 dispatcher.utter_message(text=f"Did you just Say 👇\n\nIt (**{self.firstTOL}** with '{self.firstString}') / ***{closure}*** / (**{TOLtype}** with '{fetchStr}') ? 🤔",buttons=ambigQuestion)
@@ -190,10 +221,10 @@ class ActionOutputDatatoFile(Action):
                 # file.write("2\n")
             
             # Condition what to write "Type of Language" in the "rasa_data.txt" file (Second Round - Last Round)
-            if TOLtype == "starts":
+            if TOLtype == "starts" or TOLtype == "begins" or TOLtype == "start":
                 file.write("1\t\t//starts with\n")
                 # file.write("1\n")
-            elif TOLtype == "ends":
+            elif TOLtype == "ends" or TOLtype == "end":
                 file.write("2\t\t//ends with\n")
                 # file.write("2\n")
             elif TOLtype == "contains":
@@ -268,6 +299,11 @@ class ValidateStringForm(FormValidationAction):
     ) -> Dict[Text, Any]:
 
         alphabets = tracker.get_slot("alphabets")   # get the alhabets with  "," separation exp , (a,b)
+
+        if alphabets == None:
+            dispatcher.utter_message("Hmm... I think there's an issue 🤔\n\n")
+            return [SlotSet("typeOfAutomata", None), SlotSet("alphabets", None), SlotSet("option", None), SlotSet("TOL", None), SlotSet("string", None), SlotSet("cloProp", None)]
+
         eachAlphabetList = alphabets.split(",")     # split the alphbets and make a list exp , ["a","b"]
         string = slot_value                         # get the input string from the user exp , aaabbaba or 1100101 etc
         stringUniqueList = set(string)              # get the Distinct List from the string input exp , ["a","b"] or ["0","1"]
