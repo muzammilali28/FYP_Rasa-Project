@@ -191,13 +191,13 @@ responses:
   # - text: "Ok! Now for the last time , Enter Type of Language : (starts) (ends) (contains)"
 
   utter_ask_alphabets_verify:
-  - text: "Shall We proceed to the **Alphabets** Input Now?"
+  - text: "Shall We **move on** to the **Alphabets** Input Now?"
     buttons:
       - title: "Ok! go on"
         payload: /tell_alphabets
 
   utter_ask_string_verify:
-  - text: "Shall We proceed to the **String** Input Now?"
+  - text: "Shall We **proceed** to the **String** Input Now?"
     buttons:
       - title: "Yes, proceed!"
         payload: /tell_string
@@ -253,6 +253,19 @@ responses:
   - text: "
   I am designed **Only** to Assist you with **TOA - Regular Language** Question 😇\n\n
   Anything besides this I cannot entertain"
+
+  utter_coming_back:
+  - text: "
+  So coming back to the track\n\n
+  Tell me, What Automata you want?\n\n
+  Click on your choice below 👇"
+    buttons:
+      - title: "DFA"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"DFA"}}
+      - title: "NFA"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"NFA"}}
+      - title: "NFA-NULL"
+        payload: /tell_TypeOfAutomata{{"typeOfAutomata":"NFA-NULL"}}
 
   utter_cant_process:
   - text: "I cannot proccess this\n\nkindly write what is asked..."
