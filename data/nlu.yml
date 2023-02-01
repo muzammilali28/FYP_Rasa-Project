@@ -81,6 +81,9 @@ nlu:
     - I want to make a [NFA-epsilon](typeOfAutomata)
     - make me a [NFA-epsilon](typeOfAutomata)
     - give me solution of [NFA-epsilon](typeOfAutomata)
+    - I need a [NFA-E](typeOfAutomata) urgently please
+    - It is a [NFA-NULL](typeOfAutomata) related question
+    - please make me a [NFA-NULL](typeOfAutomata)
 
 # - intent: tell_alphabets
 #   examples: |
@@ -112,12 +115,19 @@ nlu:
     - 4,5
     - 6,7
     - 8,9
-    - Yes, proceed forward.
-    - Yes, proceed
+    - Yes, go on
+    - yes move on
+    - yes carry on
     - Ok! go on
     - sure go on
     - Ok move on
     - sure, why not
+    - great carry on
+    - Yes I would like to enter the alphabets
+    - Yes move to the alphabets part
+    - carry on to the alphabets part
+    - my alphabets are "a,b"
+    - the alphabets are (a,b)
 
 # - intent: no_question
 #   examples: |
@@ -178,6 +188,7 @@ nlu:
 #     - The string is [1011001](string)
 #     - Its [aababbabbab](string)
 #     - Its [00101101101](string)
+
 - intent: tell_string
   examples: |
     - aabbaa
@@ -211,9 +222,15 @@ nlu:
     - Yes, proceed forward.
     - sure proceed
     - proceed forward
-    - ofcourse
-    - for sure
+    - ofcourse proceed
     - of course
+    - ofcourse
+    - sure
+    - for sure proceed
+    - of course proceed
+    - Yes proceed to the string input
+    - Yes I would like to enter my string
+    - proceed to the string part
 
 ######################################
 # - intent: tell_string_sec_round
@@ -358,8 +375,6 @@ nlu:
 
 - intent: Random_Input
   examples: |
-    - nfa-^
-    - NFA-^
     - ^
     - ε
     - ?
