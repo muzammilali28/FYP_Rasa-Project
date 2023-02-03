@@ -10,6 +10,11 @@ rules:
   - intent: goodbye
   - action: utter_goodbye
 
+- rule: Say Hello and Start Question
+  steps:
+  - intent: user_greet
+  - action: utter_greet_back
+
 - rule: When random input prompt with Error
   steps:
   - intent: Random_Input
@@ -24,6 +29,42 @@ rules:
   steps:
   - intent: what_you_can_do
   - action: utter_only_RL_question
+  - action: utter_coming_back
+
+- rule: Tell User about DFA
+  steps:
+  - intent: tell_me_about_DFA
+  - action: utter_about_DFA
+  - action: utter_coming_back
+
+- rule: Tell User about NFA
+  steps:
+  - intent: tell_me_about_NFA
+  - action: utter_about_NFA
+  - action: utter_coming_back
+
+- rule: Tell User about NFA-NULL
+  steps:
+  - intent: tell_me_about_NFA_NULL
+  - action: utter_about_NFA_NULL
+  - action: utter_coming_back
+
+- rule: Tell User about Regular Expression
+  steps:
+  - intent: tell_me_about_Regular_Expression
+  - action: utter_about_RE
+  - action: utter_coming_back
+
+- rule: Tell User about Regular Language
+  steps:
+  - intent: tell_me_about_Regular_Language
+  - action: utter_about_RL
+  - action: utter_coming_back
+
+- rule: Tell User about String Testing
+  steps:
+  - intent: tell_me_about_String_Testing
+  - action: utter_about_String_Testing
   - action: utter_coming_back
 
 - rule: Tell Have Another Question
