@@ -21,6 +21,12 @@ intents:
   - skip_to_sad_welcome
   - Random_Input
   - what_you_can_do
+  - tell_me_about_DFA
+  - tell_me_about_NFA
+  - tell_me_about_NFA_NULL
+  - tell_me_about_Regular_Expression
+  - tell_me_about_Regular_Language
+  - tell_me_about_String_Testing
 
 ## Entities -  Data to Fetch from users conversation etc
 entities:
@@ -245,6 +251,75 @@ responses:
 
   # utter_fetched_TOL_string:
   # - text: "So it {TOL} {string} only!"
+
+  utter_about_DFA:
+  - text: "
+  A **Deterministic Finite Automata (DFA)** is a type of 
+  abstract machine used to model a system of transitions 
+  between different states. A **DFA** is composed of a set of states, 
+  a set of input symbols, a transition function that maps each state 
+  to another state based on the input symbol, and an initial state. 
+  The tuples defining a DFA are **(Q, ∑, δ, q0, F)**\n\n
+  Where:
+  (**Q**) = Set of States, 
+  (**∑**) = Set of Input Symbols, 
+  (**δ**) = Transition Function, 
+  (**q0**) = Initial State, 
+  (**F**) = Set of Final or Accepting States"
+
+  utter_about_NFA:
+  - text: "
+  **NFA** is a type of **Non-Deterministic Finite Automata (NFA).** 
+  It is defined as a 5-Tuple **(Q, ∑, δ, q0, F)**\n\n
+  Where: 
+  (**Q**) is a finite set of states, 
+  (**∑**) is a finite set of symbols called the **alphabets**, 
+  (**δ**) is a Transition Function, 
+  (**q0**) is the Initial State, 
+  (**F**) is set of Final or Accepting States"
+
+  utter_about_NFA_NULL:
+  - text: "
+  **NFA-NULL** is a type of **Non-Deterministic Finite Automata (NFA)**. 
+  An **NFA-NULL** is kind of NFA where the transition is 
+  based on the empty set (**ε**) know as ***Epsilon***. It is defined as 
+  a 5-Tuple **(Q, ∑, δ, q0, F)**\n\n
+  Where: 
+  (**Q**) is a finite set of states, 
+  (**∑**) is a finite set of symbols called the **alphabets**, 
+  (**δ**) is a Transition Function, 
+  (**q0**) is the Initial State, 
+  (**F**) is set of Final or Accepting States"
+
+  utter_about_RE:
+  - text: "
+  A **regular expression**, or **regex**  
+  is a sequence of characters that define a search pattern 
+  used for matching strings or sets of strings. These patterns 
+  are used for searching, manipulating, and editing 
+  text-based data and can be used for a wide variety 
+  of tasks, such as validating user input, finding and replacing text 
+  and parsing files. **Regex** can be written in several different languages, 
+  but typically adhere to the same basic principles and syntax."
+
+  utter_about_RL:
+  - text: "
+  A **Regular Language** is type of Formal Language that is defined 
+  by a set of finite-state automata. It can be represented using regular expressions, 
+  which are strings composed of symbols, concatenation, and alternation. 
+  Regular Languages are well-suited to pattern matching, string manipulation, 
+  and other text-processing tasks. They are characterized by their 
+  relative simplicity and their ability to be efficiently parsed 
+  and recognized by machines."
+
+  utter_about_String_Testing:
+  - text: "
+  **String Testing** means that if the string comprised over the alphabets 
+  used in making the finite automata from the start state, transitions letter 
+  by letter to different states and the last letter of the string ends on 
+  either a final state or a non-final state. 
+  If the string ends on a Final State then it is considered as Accepted String 
+  whereas if a string ends on a Non-Final State then it is considered as a Rejected String."
 
   utter_goodbye:
   - text: "Bye"
