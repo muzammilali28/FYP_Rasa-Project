@@ -34,7 +34,7 @@
             (e.onload = () => {
               window.WebChat.default(
                 {
-                  initPayload: '/greet',                      // Initial Payload sent to User by the Widget when it is Clicked!
+                  initPayload: '/user_greet',                 // Initial Payload sent to User by the Widget when it is Clicked!
                   customData: { language: "en" },             // Specifying the Chat interaction language
                   socketUrl: "http://localhost:5005",         // Socket URL for Interacting with the Chatbot's running RASA server
                   title: 'Automata Crackistant',              // Title of the Widgget's <Header>
