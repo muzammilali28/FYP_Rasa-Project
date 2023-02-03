@@ -335,7 +335,6 @@ nlu:
     - you solved my problem , thank you so much
     - thank you
     - thank you for your help assistant
-    - No, Thank You
 
 ########################################################################################
 
@@ -391,44 +390,80 @@ nlu:
     - What else can you do
     - Is there anything else that you can do beside just solving regular language questions
     - is there anything more you can do
+
+- intent: tell_me_about_DFA
+  examples: |
     - What is a DFA
-    - What is a dfa
-    - What is a NFA
-    - what is a nfa
-    - What is a NFA-NULL
-    - what is a nfa-null
-    - what is a NFA-ε
-    - What is a nfa-ε
-    - What is a NFA-E
-    - What is a nfa-E
-    - what is a nfa-e
+    - what is a dfa
+    - What is a deterministic finite automata
+    - What is a deterministic finite automata (DFA)
+    - What is a deterministic finite automata "DFA"
     - What are the characteristics of DFA
     - What are the characteristics of dfa
+    - What are the characteristics of a deterministic finite automata
+    - can you explain me what is a DFA
+    - can you tell me what is a DFA
+
+- intent: tell_me_about_NFA
+  examples: |
+    - What is a NFA
+    - what is a nfa
+    - What is a non deterministic finite automata
+    - What is a non deterministic finite automata (NFA)
+    - What is a non deterministic finite automata "NFA"
     - What are the characteristics of NFA
-    - What are the characteristics of nfa
+    - what are the characteristics of nfa
+    - What are the characteristics of a non deterministic finite automata
+    - can you explain me what is a NFA
+    - can you tell me what is a NFA
+
+- intent: tell_me_about_NFA_NULL
+  examples: |
+    - What is a NFA-NULL
+    - What is a nfa-null
+    - What is a NFA-E
+    - what is a nfa-E
+    - What is a NFA-ε
+    - what is a nfa-ε
+    - What is a non deterministic finite automata null
+    - What is a non deterministic finite automata null (NFA-NULL)
+    - What is a non deterministic finite automata null "NFA-NULL"
+    - What is an epsilon non deterministic finite automata
+    - What is an epsilon non deterministic finite automata (NFA-E)
+    - What is an epsilon non deterministic finite automata "NFA-E"
     - What are the characteristics of NFA-NULL
-    - What are the characteristics of nfa-null
+    - what are the characteristics of nfa-null
+    - What are the characteristics of NFA-E
+    - what are the characteristics of nfa-E
     - What are the characteristics of NFA-ε
     - What are the characteristics of nfa-ε
-    - What are the characteristics of NFA-E
-    - What are the characteristics of nfa-E
-    - What are the characteristics of nfa-e
-    - What is a deterministc finite automata
-    - what is a non-deterministic finite automata
-    - What is a deterministc finite automata (DFA)
-    - what is a non-deterministic finite automata (NFA)
-    - what is a epsilon NFA
-    - What is a epsilon-nfa
-    - How to make a DFA
-    - how to make a dfa
-    - How to make deterministic finite automata
-    - How to make a NFA
-    - how to make a nfa
-    - how to make non-deterministic finite automata
-    - How to make NFA-ε
-    - How to make NFA-E
-    - How to make NFA-Epsilon
-    - how to make nfa-ε
-    - how to make nfa-E
-    - how to make nfa-e
-    - How to make nfa-epsilon
+    - What are the characteristics of a non deterministic finite automata null
+    - What are the characteristics of a epsilon non deterministic finite automata
+    - can you explain me what is a NFA-NULL
+    - can you tell me what is a NFA-NULL
+
+- intent: tell_me_about_Regular_Expression
+  examples: |
+    - What is a Regular Expression
+    - what is a regular express
+    - What is a Regex
+    - what is regular expression in theory of automata
+    - what is regular expression in TOA
+    - can you explain me what is a Regular Expression
+    - can you tell me what is a Regular Expression
+
+- intent: tell_me_about_Regular_Language
+  examples: |
+    - What is a Regular Language in TOA
+    - what is a regular language in theory of automata
+    - What is a Regular Language
+    - can you explain me what is Regular Language
+    - can you tell me what is Regular Language
+
+- intent: tell_me_about_String_Testing
+  examples: |
+    - What is String Testing
+    - what is string testing in TOA
+    - what is string testing in theory of automata
+    - can you explain me what is String Testing
+    - can you tell me what is String Testing
